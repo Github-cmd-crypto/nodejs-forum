@@ -32,7 +32,18 @@ app.use(bodyParser.urlencoded());
 
 app.use(router)
 
+// 配置一个处理404的中间件
 app.use((req, res) => {
     res.render('404.html')
 })
+
+// 配置一个全局错误处理的中间件
+app.use((err, req, res, next) => {
+    res.status(500).json({
+        code: 500,
+        message: err.message
+    })
+})
+
+
 app.listen(port, () => console.log('now you can listening to localhost:3000'))

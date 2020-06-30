@@ -19,7 +19,7 @@ router.get('/login', (req, res) => {
 })
 
 
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
     console.log(req.body)
     User.findOne({
         email: req.body.email,
@@ -27,10 +27,11 @@ router.post('/login', (req, res) => {
         password: md5(md5(req.body.password))
     }, (err, data) => {
         if (err) {
-            return res.status(500).json({
-                code: 500,
-                message: err.message
-            })
+            // return res.status(500).json({
+            //     code: 500,
+            //     message: err.message
+            // })
+            return next(err)
         }
 
         if (!data) {
@@ -53,7 +54,7 @@ router.get('/register', (req, res) => {
 })
 
 
-router.post('/register', (req, res) => {
+router.post('/register', (req, res, next) => {
     console.log(req.body)
     User.findOne({
         $or: [{
@@ -65,10 +66,11 @@ router.post('/register', (req, res) => {
         ]
     }, (err, data) => {
         if (err) {
-            return res.status(500).json({
-                code: 500,
-                message: '服务端错误'
-            })
+            // return res.status(500).json({
+            //     code: 500,
+            //     message: '服务端错误'
+            // })
+            return next(err)
         }
         if (data) {
             return res.status(200).json({
@@ -81,10 +83,11 @@ router.post('/register', (req, res) => {
 
         new User(req.body).save((err, user) => {
             if (err) {
-                return res.status(500).json({
-                    code: 500,
-                    message: '服务端错误'
-                })
+                // return res.status(500).json({
+                //     code: 500,
+                //     message: '服务端错误'
+                // })
+                return next(err)
             }
 
             // 通过session插件，把通过注册表单获取到的数据user传到session的user里面
@@ -113,14 +116,15 @@ router.get('/publish', (req, res) => {
     })
 })
 
-router.post('/publish', (req, res) => {
+router.post('/publish', (req, res, next) => {
     console.log(req.body)
     new Invitation(req.body).save((err, data) => {
         if (err) {
-            return res.status(500).json({
-                code: 500,
-                message: '服务端错误'
-            })
+            // return res.status(500).json({
+            //     code: 500,
+            //     message: '服务端错误'
+            // })
+            return next(err)
         }
 
 
@@ -133,13 +137,14 @@ router.post('/publish', (req, res) => {
 })
 
 
-router.get('/userPushInfo', (req, res) => {
+router.get('/userPushInfo', (req, res, next) => {
     Invitation.find({}, (err, data) => {
         if (err) {
-            return res.status(500).json({
-                code: 500,
-                message: '服务端错误'
-            })
+            // return res.status(500).json({
+            //     code: 500,
+            //     message: '服务端错误'
+            // })
+            return next(err)
         }
         res.status(200).json({
             code: 0,
@@ -156,16 +161,17 @@ router.get('/userInfo', (req, res) => {
     })
 })
 
-router.post('/userInfo', (req, res) => {
+router.post('/userInfo', (req, res, next) => {
     console.log(req.body)
     User.findOne({
         email: req.body.email
     }, (err, data) => {
         if (err) {
-            return res.status(500).json({
-                code: 500,
-                message: '服务端错误'
-            })
+            // return res.status(500).json({
+            //     code: 500,
+            //     message: '服务端错误'
+            // })
+            return next(err)
         }
         // res.status(200).json({
         //     code: 0,
@@ -176,10 +182,11 @@ router.post('/userInfo', (req, res) => {
 
         new User(req.body).save((err, user) => {
             if (err) {
-                return res.status(500).json({
-                    code: 500,
-                    message: '服务端错误'
-                })
+                // return res.status(500).json({
+                //     code: 500,
+                //     message: '服务端错误'
+                // })
+                return next(err)
             }
 
 

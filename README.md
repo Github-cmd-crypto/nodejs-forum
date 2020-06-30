@@ -6,13 +6,12 @@
 
 ### 启动方法
 
-1. 安装依赖包`$ npm install`
-2. 开启数据库
+1. 开启数据库
    - `$ mongod`
    - `$ mongo`
-3. 使用 nodemon 或 node,启动 app.js
+2. 使用 nodemon 或 node,启动 app.js
    - `$ nodemon app.js` / `node app.js`
-4. 在浏览器输入 `localhost:3000` 即可访问项目
+3. 在浏览器输入 `localhost:3000` 即可访问项目
 
 ### 技术栈
 
